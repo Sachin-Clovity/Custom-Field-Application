@@ -1,0 +1,19 @@
+modules:
+  jira:globalPage:
+    - key: custom-field-application-hello-world-page
+      resource: main
+      resolver:
+        function: resolver
+      title: Custom Field Application
+  function:
+    - key: resolver
+      handler: index.handler
+resources:
+  - key: main
+    path: static/hello-world/build
+app:
+  runtime:
+    name: nodejs22.x
+    memoryMB: 256
+    architecture: arm64
+  id: ari:cloud:ecosystem::app/eefbbd18-0890-4448-99e4-f7dff7f4a8ac
