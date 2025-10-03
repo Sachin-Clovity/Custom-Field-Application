@@ -60,6 +60,8 @@ resolver.define("createCustomField", async ({ payload }) => {
 
   const field = await res.json();
 
+  //this data are stored in the forge storage
+
   await storage.set(`customField:${field.id}`, {
     id: field.id,
     name,
