@@ -11,6 +11,9 @@ modules:
 resources:
   - key: main
     path: static/hello-world/build
+
+  - key: moscow-images # <--- new resource for images
+    path: static/hello-world/images # <--- folder where all template images are stored
 app:
   runtime:
     name: nodejs22.x
@@ -19,8 +22,11 @@ app:
   id: ari:cloud:ecosystem::app/eefbbd18-0890-4448-99e4-f7dff7f4a8ac
 permissions:
   scopes:
+    - read:jira-user
     - storage:app
     - manage:jira-project
     - manage:jira-configuration
     - read:jira-work
     - write:jira-work
+    - read:group:jira
+    - read:role:jira
