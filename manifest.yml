@@ -11,6 +11,8 @@ modules:
 resources:
   - key: main
     path: static/hello-world/build
+  - key: assets
+    path: static/assets
 app:
   runtime:
     name: nodejs22.x
@@ -24,3 +26,86 @@ permissions:
     - manage:jira-configuration
     - read:jira-work
     - write:jira-work
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# modules:
+#   # jira:globalPage:
+#   #   - key: custom-field-application-hello-world-page
+#   #     resource: main
+#   #     resolver:
+#   #       function: resolver
+#   #     title: Custom Field Application
+#   # jira:issueGlance:
+#   #   - key: issue-glance-field-image
+#   #     resource: glance-ui
+#   #     resolver:
+#   #       function: resolver
+#   #     title: Custom Field Image
+#   #     label: View Field Image
+#   jira:customField:
+#     - key: dropdown-image-field
+#       name: Dropdown Image Field
+#       description: Dropdown field that shows an image based on selection
+#       type: string
+#       readOnly: false
+#       function: resolver
+#       edit:
+#         resource: edit
+#         render: web
+#       view:
+#         resource: view
+#         render: web
+#   function:
+#     - key: resolver
+#       handler: index.handler
+# resources:
+#   - key: main
+#     path: static/hello-world/build
+#   # - key: glance-ui
+#   #   path: static/glance/build
+#   - key: edit
+#     path: static/edit-ui
+#   - key: view
+#     path: static/view-ui
+#   - key: assets
+#     path: static/assets
+# app:
+#   runtime:
+#     name: nodejs22.x
+#     memoryMB: 256
+#     architecture: arm64
+#   id: ari:cloud:ecosystem::app/eefbbd18-0890-4448-99e4-f7dff7f4a8ac
+# permissions:
+#   scopes:
+#     - storage:app
+#     - manage:jira-project
+#     - manage:jira-configuration
+#     - read:jira-work
+#     - write:jira-work
