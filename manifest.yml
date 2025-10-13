@@ -70,6 +70,8 @@ modules:
     - key: fieldui-custom-field-ui-kit-2-hello-world
       name: fielduui
       description: A hello world custom field.
+      resolver:
+        function: resolver
       type: string
       view:
         render: native
@@ -86,6 +88,26 @@ modules:
           - issue-transition
           - issue-view
           - portal-request
+
+    - key: fieldui-custom-field-ui-kit-2-hello
+      name: fielduuisec
+      description: A hello world custom field.
+      type: string
+      view:
+        render: native
+        resource: mainnn
+        experience:
+          - issue-view
+          - portal-view
+      edit:
+        resource: editd
+        render: native
+        isInline: true
+        experience:
+          - issue-create
+          - issue-transition
+          - issue-view
+          - portal-request
   function:
     - key: resolver
       handler: index.handler
@@ -95,9 +117,13 @@ resources:
   # - key: assets
   #   path: static/assets
   - key: mainn
-    path: src/frontend/index.jsx
+    path: src/frontend/MOSCO/index.jsx
   - key: edit
-    path: src/frontend/edit.jsx
+    path: src/frontend/MOSCO/edit.jsx
+  - key: mainnn
+    path: src/frontend/TShirt/indexx.jsx
+  - key: editd
+    path: src/frontend/TShirt/editt.jsx
 app:
   runtime:
     name: nodejs22.x

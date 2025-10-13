@@ -334,7 +334,7 @@ resolver.define("getScreens", async () => {
 
 
 
-
+// this is working for single selected templet now i am going to add for multiple template
 
 resolver.define('createCustomField', async ({ payload }) => {
   const { name, description, typeId, addToDefaultScreen } = payload || {};
@@ -372,6 +372,83 @@ resolver.define('createCustomField', async ({ payload }) => {
 
   return { id: field.id, key: field.key, name: field.name };
 });
+
+
+
+
+
+
+// resolver.define('createCustomField', async ({ payload }) => {
+//   const { name, description, typeId, config } = payload || {};
+//   console.log('createCustomField payload:', payload);
+
+//   if (!name || !typeId) {
+//     throw new Error('Missing required params: name, typeId');
+//   }
+
+//   const res = await api.asApp().requestJira(route`/rest/api/3/field`, {
+//     method: 'POST',
+//     headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+//     body: JSON.stringify({
+//       name,
+//       description: description || '',
+//       type: typeId
+//     }),
+//   });
+
+//   if (!res.ok) {
+//     const text = await res.text();
+//     throw new Error(`Create field failed: ${res.status} ${res.statusText} - ${text}`);
+//   }
+
+//   const field = await res.json(); // { id: "customfield_XXXXX", ... }
+//   console.log('Field created:', field);
+
+//   // Store config so Edit / View can resolve template options/icons
+//   if (config && config.templateType) {
+//     const fullId = field.id; // e.g. "customfield_10068"
+//     const numericId = fullId.startsWith('customfield_') ? fullId.slice('customfield_'.length) : fullId;
+
+//     console.log('Saving config for keys:', `field-config-${fullId}`, `field-config-${numericId}`, 'value:', config);
+
+//     await storage.set(`field-config-${fullId}`, config);
+//     await storage.set(`field-config-${numericId}`, config);
+//   } else {
+//     console.warn('No templateType provided in config; skipping storage.');
+//   }
+
+//   return { id: field.id, key: field.key, name: field.name };
+// });
+
+// /**
+//  * Read config by fieldId. Tries both full and numeric keys.
+//  */
+// resolver.define('getFieldConfig', async ({ payload }) => {
+//   const { fieldId } = payload || {};
+//   if (!fieldId) return null;
+
+//   const fullId = String(fieldId);
+//   const numericId = fullId.replace('customfield_', '');
+//   const keysToTry = [`field-config-${fullId}`, `field-config-${numericId}`];
+
+//   for (const key of keysToTry) {
+//     const cfg = await storage.get(key);
+//     if (cfg) {
+//       console.log('Config hit:', key, cfg);
+//       return cfg;
+//     }
+//   }
+//   console.warn('No config found for field:', fieldId, 'tried keys:', keysToTry);
+//   return null;
+// });
+
+
+
+
+
+
+
+
 
 
 /**
@@ -425,6 +502,26 @@ resolver.define("associateFieldToScreens", async ({ payload }) => {
 
   console.log("📊 [Backend] Association results:", results);
   return { success: results.every((r) => r.success), results };
+});
+
+
+
+
+resolver.define('saveFieldConfig', async (req) => {
+  const { fieldId, config } = req.payload;
+  console.log("request for save..", req);
+  await storage.set(`cf-config:${fieldId}`, config);
+   const cfg = await storage.get(`cf-config:${fieldId}`);
+   console.log("save value in saveco....", cfg);
+  return { ok: true };
+});
+
+resolver.define('getFieldConfig', async (req) => {
+  console.log("hheelell...");
+  const { fieldId } = req.payload;
+  const cfg = await storage.get(`cf-config:${fieldId}`);
+  console.log("get value in getvade....", cfg);
+  return cfg || {};
 });
 
 export const handler = resolver.getDefinitions();
